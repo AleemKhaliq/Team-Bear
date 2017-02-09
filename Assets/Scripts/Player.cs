@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour {
 
@@ -8,11 +9,23 @@ public class Player : MonoBehaviour {
     public float maxSpeed = 5;
     public float jumpStrength = 150f;
     public bool grounded;
-    public bool crouched;
-    public bool uppercut;
+    public bool crouched; 
     public bool dash;
+    public bool noMove; //Prevent movement
+    public int faceDirection;   //Direction Player is facing
+
+    public bool attacking;
+    private float attackCool = 0.3f; //Cooldown between swings
+    private float attackTimer;
+    public bool uppercut;
+    public bool charged;    //Whether or not attck has been held long enough for charge moves
+    public float heldTime;  //Ammount of time attack has been held
+
+    public int maxHealth = 5;
+    public int curHealth;
 
     private Rigidbody2D getBody;
+    public Collider2D AttackTrigger;
     private Animator anim;
 
 	// Use this for initialization
@@ -20,7 +33,11 @@ public class Player : MonoBehaviour {
     {
         getBody = gameObject.GetComponent <Rigidbody2D> ();
         anim = gameObject.GetComponent<Animator>();
+        curHealth = maxHealth;
         uppercut = true;
+        attacking = false;
+        //attackTrigger = gameObject.GetComponentInChildren<Collider2D>("Claw");
+        AttackTrigger.enabled = false;
 	}
 	
 	// Update is called once per frame
@@ -30,13 +47,17 @@ public class Player : MonoBehaviour {
         anim.SetBool("Grounded", grounded);
         anim.SetBool("IsCrouched", crouched);
         anim.SetBool("Dash", dash);
+        anim.SetBool("Attack", attacking);
 
+        //Rotation
         if (Input.GetAxis("Horizontal") > 0.1f)
         {
+            faceDirection = 1;
             transform.localScale = new Vector3(1, 1, 1);
         }
         if (Input.GetAxis("Horizontal") < -0.1f)
         {
+            faceDirection = -1;
             transform.localScale = new Vector3(-1, 1, 1);
         }
 
@@ -47,18 +68,56 @@ public class Player : MonoBehaviour {
             //Debug.Log("Jump");
         }
 
-        //Swing
-        if (Input.GetButtonDown("Fire1") && grounded)
+        //Check if charged
+        if (Input.GetButtonDown("Fire1"))
         {
-            anim.SetTrigger("Swing");
-            //Debug.Log("Swing");
+            heldTime = Time.time;
+        }
+        if (Input.GetButton("Fire1"))
+        {
+            noMove = true;
+            if (Time.time - heldTime > 1f)
+            {
+                charged = true;
+            }
+        }
+        if (Input.GetButtonUp("Fire1"))
+        {
+            noMove = false;
+            heldTime = 0;
+            charged = false;
         }
 
+        //Swing
+        if (Input.GetButtonUp("Fire1") && !charged && uppercut && !attacking)
+        { 
+            attacking = true;
+            AttackTrigger.enabled = true;
+            attackTimer = attackCool;
+        }
+        if (Input.GetButtonUp("Fire1") && charged && uppercut && !attacking)
+        {
+            attacking = true;
+            AttackTrigger.enabled = true;
+            attackTimer = attackCool;
+        }
+        if (attacking)
+        {
+            if (attackTimer > 0)
+            {
+                attackTimer -= Time.deltaTime;
+            }
+            else
+            {
+                attacking = false;
+                AttackTrigger.enabled = false;
+            }
+        }
         //Uppercut
         if (Input.GetAxisRaw("Vertical") > 0 && Input.GetButtonDown("Fire1") && uppercut)
         {
+            uppercut = true;
             anim.SetTrigger("Uppercut");
-            Debug.Log("UpCut");
             StartCoroutine(useUppercut());
             if (!grounded)
             {
@@ -69,7 +128,6 @@ public class Player : MonoBehaviour {
         if (grounded)
         {
             uppercut = true;
-            Debug.Log("1");
         }
 
         //Dash
@@ -96,15 +154,26 @@ public class Player : MonoBehaviour {
         {
             crouched = false;
         }
+
+        //Health
+        if (curHealth > maxHealth)
+        {
+            curHealth = maxHealth;
+        }
+        if(curHealth <= 0)
+        {
+            Die();
+        }
     }
 
     IEnumerator useUppercut()
     {
         Vector2 temp = getBody.velocity;
-        getBody.velocity = new Vector2(0f, 7.5f);
-        Debug.Log("1");
-        yield return new WaitForSeconds (1);
+        noMove = true;
+        getBody.velocity = new Vector2(0f, 15f);
+        yield return new WaitForSeconds (0.25f);
         getBody.velocity = new Vector2(0f, 0f);
+        noMove = false;
     }
 
     void FixedUpdate()
@@ -123,16 +192,9 @@ public class Player : MonoBehaviour {
         //Walking
         float input = Input.GetAxisRaw("Horizontal");
 
-        getBody.AddForce((Vector2.right * speed) * input);
-
-        if (input == 1)
+        if (!noMove)
         {
-            //Debug.Log("Walk Right");
-        }
-
-        else if (input == -1)
-        {
-            //Debug.Log("Walk Left");
+            getBody.AddForce((Vector2.right * speed) * input);
         }
 
         //Limiting Speed
@@ -145,5 +207,26 @@ public class Player : MonoBehaviour {
         {
             getBody.velocity = new Vector2(-maxSpeed, getBody.velocity.y);
         }
+    }
+
+    public void Damage(int dmg)
+    {
+        curHealth -= dmg;
+    }
+
+    public IEnumerator Knockback(float knockDur, float knockDir, float power)
+    {
+        float time = 0;
+        while (knockDur > time)
+        {
+            time += Time.deltaTime;
+            getBody.AddForce(new Vector2((power) * knockDir, power));
+        }
+        yield return 0;
+    }
+
+    void Die()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
