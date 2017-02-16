@@ -29,7 +29,6 @@ public class BadBox : MonoBehaviour {
             {
                 direction = -1;
             }
-            StartCoroutine(player.Knockback(0.02f, direction, 1000f));
         }
     }
 }
