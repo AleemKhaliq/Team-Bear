@@ -18,7 +18,7 @@ public class TunnelHome : MonoBehaviour {
     }
 	
     // Checks to see if the player has entered over the area of the tunnel
-	void OnTriggerEnter2D(Collider2D area)
+	void OnTriggerStay2D(Collider2D area)
     {
         if (area.CompareTag("Player"))
         {
@@ -31,10 +31,10 @@ public class TunnelHome : MonoBehaviour {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }
-        else
-        {
-            tunnelMsg.Display = false;
-        }
+        //else
+        //{
+        //    tunnelMsg.Display = false;
+        //}
     }
      
 }
