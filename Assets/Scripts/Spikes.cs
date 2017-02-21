@@ -5,13 +5,13 @@ using UnityEngine;
 public class Spikes : MonoBehaviour {
 
     private Player player;
-    private Vector2 hitObject;
+    private Vector2 spike;
 
     // Use this for initialization
     void Start ()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-        hitObject = gameObject.transform.position;
+        spike = gameObject.transform.position;
     }
 
     void OnTriggerEnter2D(Collider2D col)
@@ -21,7 +21,7 @@ public class Spikes : MonoBehaviour {
             player.Damage(1);
             Debug.Log("Hit");
             int direction;
-            if (player.transform.position.x > hitObject.x)
+            if (player.transform.position.x > spike.x)
             {
                 direction = 1;
             }
@@ -29,7 +29,7 @@ public class Spikes : MonoBehaviour {
             {
                 direction = -1;
             }
-            StartCoroutine(player.Knockback(0.02f, direction, 5f));
+            StartCoroutine(player.Knockback(0.02f, direction, 500f));
         }
     }
 }
