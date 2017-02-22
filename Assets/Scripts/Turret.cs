@@ -46,6 +46,14 @@ public class Turret : MonoBehaviour {
         {
             lookRight = false;
         }
+        if (curHealth > maxHealth)
+        {
+            curHealth = maxHealth;
+        }
+        if (curHealth <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 
     void RangeCheck()
@@ -62,7 +70,7 @@ public class Turret : MonoBehaviour {
         }
     }
 
-    public void attack(bool attackRight)
+    public void Attack(bool attackRight)
     {
         shotTimer += Time.deltaTime;
         if (shotTimer >= shotInterval)
@@ -84,5 +92,10 @@ public class Turret : MonoBehaviour {
                 shotTimer = 0;
             }
         }
+    }
+
+    public void Damage(int dmg)
+    {
+        curHealth -= dmg;
     }
 }

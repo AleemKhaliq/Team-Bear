@@ -30,11 +30,11 @@ public class ViewCone : MonoBehaviour {
         {
             if (isRight)
             {
-                turret.attack(true);
+                turret.Attack(true);
             }
             else
             {
-                turret.attack(false);
+                turret.Attack(false);
             }
         }
     }
