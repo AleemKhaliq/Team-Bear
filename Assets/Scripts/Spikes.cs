@@ -29,7 +29,7 @@ public class Spikes : MonoBehaviour {
             {
                 direction = -1;
             }
-            StartCoroutine(player.Knockback(0.02f, direction, 500f));
+            StartCoroutine(player.Knockback(0.02f, direction, 5f));
         }
     }
 }
