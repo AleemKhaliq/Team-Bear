@@ -23,8 +23,10 @@ public class Player : MonoBehaviour
     public bool noMove; //Prevent movement
     public int faceDirection;   //Direction Player is facing
 
+    public bool canFloat;
     public bool attacking;
-    private float attackCool = 0.3f; //Cooldown between swings
+    public bool doSwing;
+    private float attackCool = 0.25f; //Cooldown between swings
     private float attackTimer;
     public bool uppercut;
     public bool charged;    //Whether or not attck has been held long enough for charge moves
@@ -61,7 +63,6 @@ public class Player : MonoBehaviour
         anim.SetBool("Roll", roll);
         anim.SetBool("Dash", dash);
         anim.SetBool("Attack", attacking);
-
         //Rotation
         if (Input.GetAxis("Horizontal") > 0.1f)
         {
@@ -107,6 +108,7 @@ public class Player : MonoBehaviour
             if(!crouched)
             {
                 AttackTrigger.enabled = true;
+                anim.SetTrigger("Swing");
             }
             else if (crouched)
             {
@@ -119,6 +121,7 @@ public class Player : MonoBehaviour
             attacking = true;
             if (!crouched)
             {
+                doSwing = true;
                 AttackTrigger.enabled = true;
             }
             else if (crouched)
@@ -127,6 +130,10 @@ public class Player : MonoBehaviour
             }
             attackTimer = attackCool;
         }
+        /*if (Input.GetButtonUp("Fire1") && !charged && !grounded && uppercut && !attacking)
+        {
+            StartCoroutine(airFloat());
+        }*/
         if (attacking)
         {
             if (attackTimer > 0)
@@ -137,6 +144,7 @@ public class Player : MonoBehaviour
             {
                 attacking = false;
                 AttackTrigger.enabled = false;
+                CrouchAttackTrigger.enabled = false;
             }
         }
         /*if (Input.GetButtonUp("Fire1") && !charged && uppercut && !attacking)
@@ -170,6 +178,7 @@ public class Player : MonoBehaviour
                 }
             }
         }*/
+
         //Uppercut
         if (Input.GetAxisRaw("Vertical") > 0 && Input.GetButtonDown("Fire1") && uppercut)
         {
@@ -284,6 +293,17 @@ public class Player : MonoBehaviour
         if (curHealth <= 0)
         {
             Die();
+        }
+    }
+
+    IEnumerator airFloat()
+    {
+        bool doFloat = true;
+        while (doFloat)
+        {
+            getBody.velocity = (new Vector2(0, 0));
+            yield return new WaitForSeconds(1f);
+            doFloat = false;
         }
     }
 
