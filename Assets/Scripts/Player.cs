@@ -28,6 +28,7 @@ public class Player : MonoBehaviour
     public bool doSwing;
     private float attackCool = 0.25f; //Cooldown between swings
     private float attackTimer;
+    public bool canUppercut;
     public bool uppercut;
     public bool charged;    //Whether or not attck has been held long enough for charge moves
     public float heldTime;  //Ammount of time attack has been held
@@ -46,7 +47,7 @@ public class Player : MonoBehaviour
         getBody = gameObject.GetComponent<Rigidbody2D>();
         anim = gameObject.GetComponent<Animator>();
         curHealth = maxHealth;
-        uppercut = true;
+        canUppercut = true;
         attacking = false;
         AttackTrigger.enabled = false;
         CrouchAttackTrigger.enabled = false;
@@ -63,6 +64,8 @@ public class Player : MonoBehaviour
         anim.SetBool("Roll", roll);
         anim.SetBool("Dash", dash);
         anim.SetBool("Attack", attacking);
+        anim.SetBool("Uppercut", uppercut);
+
         //Rotation
         if (Input.GetAxis("Horizontal") > 0.1f)
         {
@@ -102,7 +105,7 @@ public class Player : MonoBehaviour
         }
 
         //Swing
-        if (Input.GetButtonUp("Fire1") && !charged && uppercut && !attacking)
+        if (Input.GetButtonUp("Fire1") && !charged && !uppercut && !attacking)
         {
             attacking = true;
             if(!crouched)
@@ -116,7 +119,7 @@ public class Player : MonoBehaviour
             }
             attackTimer = attackCool;
         }
-        if (Input.GetButtonUp("Fire1") && charged && uppercut && !attacking)
+        if (Input.GetButtonUp("Fire1") && charged && !uppercut && !attacking)
         {
             attacking = true;
             if (!crouched)
@@ -130,7 +133,7 @@ public class Player : MonoBehaviour
             }
             attackTimer = attackCool;
         }
-        /*if (Input.GetButtonUp("Fire1") && !charged && !grounded && uppercut && !attacking)
+        /*if (Input.GetButtonUp("Fire1") && !charged && !grounded && !uppercut && !attacking)
         {
             StartCoroutine(airFloat());
         }*/
@@ -180,20 +183,19 @@ public class Player : MonoBehaviour
         }*/
 
         //Uppercut
-        if (Input.GetAxisRaw("Vertical") > 0 && Input.GetButtonDown("Fire1") && uppercut)
+        if (Input.GetAxisRaw("Vertical") > 0 && Input.GetButtonDown("Fire1") && canUppercut)
         {
-            uppercut = true;
-            anim.SetTrigger("Uppercut");
+            canUppercut = true;
             StartCoroutine(useUppercut());
             if (!grounded)
             {
-                uppercut = false;
+                canUppercut = false;
             }
         }
 
         if (grounded)
         {
-            uppercut = true;
+            canUppercut = true;
         }
 
         //Dash
@@ -311,10 +313,12 @@ public class Player : MonoBehaviour
     {
         Vector2 temp = getBody.velocity;
         noMove = true;
+        uppercut = true;
         getBody.velocity = new Vector2(0f, 15f);
         yield return new WaitForSeconds(0.25f);
         getBody.velocity = new Vector2(0f, 0f);
         noMove = false;
+        uppercut = false;
     }
 
     void FixedUpdate()
@@ -353,6 +357,7 @@ public class Player : MonoBehaviour
     public void Damage(int dmg)
     {
         curHealth -= dmg;
+        gameObject.GetComponent<Animation>().Play("Red_Flash");
     }
 
     public IEnumerator Knockback(float knockDur, float knockDir, float power)
