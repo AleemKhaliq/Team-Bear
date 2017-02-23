@@ -30,6 +30,7 @@ public class Player : MonoBehaviour
     private float attackTimer;
     public bool canUppercut;
     public bool uppercut;
+    public bool slam;
     public bool charged;    //Whether or not attck has been held long enough for charge moves
     public float heldTime;  //Ammount of time attack has been held
 
@@ -39,6 +40,8 @@ public class Player : MonoBehaviour
     private Rigidbody2D getBody;
     public Collider2D AttackTrigger;
     public Collider2D CrouchAttackTrigger;
+    public Collider2D UppercutAttackTrigger;
+    public Collider2D SlamAttackTrigger;
     private Animator anim;
 
     // Use this for initialization
@@ -51,6 +54,8 @@ public class Player : MonoBehaviour
         attacking = false;
         AttackTrigger.enabled = false;
         CrouchAttackTrigger.enabled = false;
+        UppercutAttackTrigger.enabled = false;
+        SlamAttackTrigger.enabled = false;
         roll = false;
         canRoll = true;
     }
@@ -65,6 +70,7 @@ public class Player : MonoBehaviour
         anim.SetBool("Dash", dash);
         anim.SetBool("Attack", attacking);
         anim.SetBool("Uppercut", uppercut);
+        anim.SetBool("Slam", slam);
 
         //Rotation
         if (Input.GetAxis("Horizontal") > 0.1f)
@@ -105,7 +111,7 @@ public class Player : MonoBehaviour
         }
 
         //Swing
-        if (Input.GetButtonUp("Fire1") && !charged && !uppercut && !attacking)
+        if (Input.GetButtonUp("Fire1") && !charged && !uppercut && !attacking && !slam)
         {
             attacking = true;
             if(!crouched)
@@ -119,7 +125,7 @@ public class Player : MonoBehaviour
             }
             attackTimer = attackCool;
         }
-        if (Input.GetButtonUp("Fire1") && charged && !uppercut && !attacking)
+        if (Input.GetButtonUp("Fire1") && charged && !uppercut && !attacking && !slam)
         {
             attacking = true;
             if (!crouched)
@@ -198,6 +204,22 @@ public class Player : MonoBehaviour
             canUppercut = true;
         }
 
+        //Slam
+        if (Input.GetAxisRaw("Vertical") < 0 && Input.GetButtonDown("Fire1") && !uppercut && !grounded)
+        {
+            slam = true;
+            SlamAttackTrigger.enabled = true;
+        }
+
+        if (slam && !grounded)
+        {
+            getBody.velocity = new Vector2(0, -15f);
+        }
+        if (slam && grounded)
+        {
+            slam = false;
+            SlamAttackTrigger.enabled = false;
+        }
         //Dash
         /*if (Input.GetKey("left shift"))
         {
@@ -314,11 +336,13 @@ public class Player : MonoBehaviour
         Vector2 temp = getBody.velocity;
         noMove = true;
         uppercut = true;
+        UppercutAttackTrigger.enabled = true;
         getBody.velocity = new Vector2(0f, 15f);
         yield return new WaitForSeconds(0.25f);
         getBody.velocity = new Vector2(0f, 0f);
         noMove = false;
         uppercut = false;
+        UppercutAttackTrigger.enabled = false;
     }
 
     void FixedUpdate()
