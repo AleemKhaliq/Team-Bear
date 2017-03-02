@@ -9,14 +9,17 @@ public class Drone : MonoBehaviour
 
     public bool faceRight;
     public bool faceLeft;
+    public float speed;
 
     private Player player;
-    
+    public Animator animate;    
 
 	// Use this for initialization
 	void Start ()
     {
-		
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        faceLeft = true;
+        faceRight = false;
 	}
 	
 	// Update is called once per frame
