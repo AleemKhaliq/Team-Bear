@@ -12,12 +12,14 @@ public class Drone : MonoBehaviour
     public float speed;
 
     private Player player;
+    private Rigidbody2D myRigidBody;
     public Animator animate;    
 
 	// Use this for initialization
 	void Start ()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        myRigidBody = GetComponent<Rigidbody2D>();
         faceLeft = true;
         faceRight = false;
 	}
@@ -25,6 +27,35 @@ public class Drone : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-		
+        MoveLeft();
 	}
+
+    // Movement 
+    void MoveRight()
+    {
+        myRigidBody.AddForce(new Vector2(speed, 0));
+    }
+
+    void MoveLeft()
+    {
+        myRigidBody.AddForce(new Vector2(-speed, 0));
+    }
+
+    // Chase logic
+    void Chase()
+    {
+
+    }
+
+    // Recovery logic
+    void Run()
+    {
+
+    }
+
+    // Attack logic
+    void Hit()
+    {
+
+    }
 }
