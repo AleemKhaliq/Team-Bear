@@ -156,37 +156,6 @@ public class Player : MonoBehaviour
                 CrouchAttackTrigger.enabled = false;
             }
         }
-        /*if (Input.GetButtonUp("Fire1") && !charged && uppercut && !attacking)
-        {
-            attacking = true;
-            attackTimer = attackCool;
-        }
-        if (Input.GetButtonUp("Fire1") && charged && uppercut && !attacking)
-        {
-            if (!crouched)
-            {
-                AttackTrigger.enabled = true;
-            }
-            else if (crouched)
-            {
-                CrouchAttackTrigger.enabled = true;
-            }
-            attacking = true;
-            attackTimer = attackCool;
-            if (attacking)
-            {
-                if (attackTimer > 0)
-                {
-                    attackTimer -= Time.deltaTime;
-                }
-                else
-                {
-                    attacking = false;
-                    AttackTrigger.enabled = false;
-                    CrouchAttackTrigger.enabled = false;
-                }
-            }
-        }*/
 
         //Uppercut
         if (Input.GetAxisRaw("Vertical") > 0 && Input.GetButtonDown("Fire1") && canUppercut)
@@ -220,6 +189,7 @@ public class Player : MonoBehaviour
             slam = false;
             SlamAttackTrigger.enabled = false;
         }
+
         //Dash
         /*if (Input.GetKey("left shift"))
         {

@@ -5,8 +5,10 @@ using UnityEngine;
 public class AttackTrigger : MonoBehaviour {
 
     public int dmg;
+    public string attack;
+    public bool airFloat = false;
     private Player player;
-    
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
@@ -30,6 +32,7 @@ public class AttackTrigger : MonoBehaviour {
         if (col.isTrigger == false && col.CompareTag("Enemy"))
         {
             col.SendMessageUpwards("Damage", dmg);
+            col.SendMessageUpwards("KnockBack");
         }
     }
 }
