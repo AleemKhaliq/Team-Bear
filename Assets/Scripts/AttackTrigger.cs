@@ -21,6 +21,14 @@ public class AttackTrigger : MonoBehaviour {
         {
             dmg = 2;
         }
+        else if (player.uppercut)
+        {
+            dmg = 2;
+        }
+        else if (player.slam)
+        {
+            dmg = 2;
+        }
         else
         {
             dmg = 1;

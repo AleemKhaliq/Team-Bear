@@ -4,21 +4,21 @@ using UnityEngine;
 
 public class Drone : MonoBehaviour
 {
-    private int health;
-    public int maximumHealth;
-
     public bool faceRight;
     public bool faceLeft;
+    public bool attacking;
     public float speed;
     public float reverseSpeed;
+    private float attackTimer = 0.2f;
+    private float direction = 0;
+
 
     private Player player;
     private Rigidbody2D myRigidBody;
     private SpriteRenderer SpriteRenderer;
-    public Animator animate;
+    private Animator animate;
+    public Collider2D AttackTrigger;
     
-    public bool Attacking { get; set; }
-
 	// Use this for initialization
 	void Start ()
     {
@@ -26,15 +26,49 @@ public class Drone : MonoBehaviour
         myRigidBody = GetComponent<Rigidbody2D>();
         SpriteRenderer = GetComponent<SpriteRenderer>();
         faceLeft = true;
-        faceRight = false;
-        health = maximumHealth;
-	}
+        faceRight = false;        
+        attacking = false;
+        animate.SetBool("Attack", attacking);
+    }
 	
 	// Update is called once per frame
 	void Update ()
     {
-        
+        Chase();
+
+        CheckLocation();
+        if (faceRight && player.transform.position.x < transform.position.x + (direction * 1) || faceLeft && player.transform.position.x > transform.position.x + (direction * 1)/*player.transform.position.x < transform.position.x + (1 * 1) || player.transform.position.x > transform.position.x + (-1 * 1)*/)
+        {
+            Debug.Log("close");            
+            attacking = true;
+            AttackTrigger.enabled = true;
+
+            if (attacking)
+            {
+                if (attackTimer > 0)
+                {
+                    attackTimer -= Time.deltaTime;
+                }
+                else
+                {
+                    attacking = false;
+                    AttackTrigger.enabled = false;
+                }
+            }
+        }
 	}
+
+    void CheckLocation()
+    {
+        if (player.transform.position.x > transform.position.x)
+        {
+            direction = 1;
+        }
+        else
+        {
+            direction = -1;
+        }
+    }
 
     // Movement - base movement controls
     /// <summary>
@@ -106,7 +140,7 @@ public class Drone : MonoBehaviour
         else
         {
             MoveLeft();
-        }
+        }        
     }
 
     /// <summary>
@@ -125,9 +159,9 @@ public class Drone : MonoBehaviour
     }
 
     // Attack logic
-    void Swing()
+    bool Swing()
     {
-
+        return true;
     }
 
     // Combined Behaviour
