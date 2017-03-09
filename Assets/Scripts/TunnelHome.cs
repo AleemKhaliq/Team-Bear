@@ -17,7 +17,10 @@ public class TunnelHome : MonoBehaviour {
         tunnel = gameObject.transform.position;
     }
 
-    // Checks to see if the player has entered over the area of the tunnel
+    /// <summary>
+    /// Checks to see if the player has entered over the area of the tunnel
+    /// </summary>
+    /// <param name="area"></param>
     void OnTriggerStay2D(Collider2D area)
     {
         if (area.CompareTag("Player"))
