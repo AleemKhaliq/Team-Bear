@@ -36,8 +36,8 @@ public class Drone : MonoBehaviour
     {
         Chase();
 
-        CheckLocation();
-        if (faceRight && player.transform.position.x < transform.position.x + (direction * 1) || faceLeft && player.transform.position.x > transform.position.x + (direction * 1)/*player.transform.position.x < transform.position.x + (1 * 1) || player.transform.position.x > transform.position.x + (-1 * 1)*/)
+        CheckPosition();
+        if (faceRight && player.transform.position.x < transform.position.x + (direction * 1) || faceLeft && player.transform.position.x > transform.position.x + (direction * 1))
         {
             Debug.Log("close");            
             attacking = true;
@@ -58,7 +58,10 @@ public class Drone : MonoBehaviour
         }
 	}
 
-    void CheckLocation()
+    /// <summary>
+    /// Checks to see which side of the enemy the player is on
+    /// </summary>
+    void CheckPosition()
     {
         if (player.transform.position.x > transform.position.x)
         {
@@ -133,7 +136,7 @@ public class Drone : MonoBehaviour
     /// </summary>
     void Chase()
     {
-        if(player.transform.position.x > transform.position.x)
+        if(direction == 1)
         {
             MoveRight();
         }
@@ -148,7 +151,7 @@ public class Drone : MonoBehaviour
     /// </summary>
     void Run()
     {
-        if (player.transform.position.x > transform.position.x)
+        if (direction == 1)
         {
             BackLeft();
         }
