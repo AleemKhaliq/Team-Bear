@@ -17,12 +17,14 @@ public class Drone : MonoBehaviour
     private Rigidbody2D myRigidBody;
     private SpriteRenderer SpriteRenderer;
     private Animator animate;
+    private RangeCheck rangeCheck;
     public Collider2D AttackTrigger;
     
 	// Use this for initialization
 	void Start ()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        rangeCheck = GameObject.FindGameObjectWithTag("Vision").GetComponent<RangeCheck>();
         myRigidBody = GetComponent<Rigidbody2D>();
         SpriteRenderer = GetComponent<SpriteRenderer>();
         faceLeft = true;
@@ -34,6 +36,7 @@ public class Drone : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
+        //Behave();
         Chase();
 
         CheckPosition();
@@ -170,6 +173,9 @@ public class Drone : MonoBehaviour
     // Combined Behaviour
     void Behave()
     {
-
+        if (rangeCheck.inRange)
+        {
+            Chase();
+        }
     }
 }

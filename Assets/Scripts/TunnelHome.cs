@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class TunnelHome : MonoBehaviour {
-
+public class TunnelHome : MonoBehaviour
+{
     private Player player;
     private TunnelMessage tunnelMsg;
     private Vector2 tunnel;
