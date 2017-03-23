@@ -15,8 +15,8 @@ public class DeathPlane : MonoBehaviour {
     {
         if (col.CompareTag("Player"))
         {
-            player.Damage(player.curHealth);
-            Debug.Log("Hit");
+            player.Damage(1);
+            player.hitLevelLimit();
         }
     }
 }

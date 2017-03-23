@@ -41,6 +41,7 @@ public class AttackTrigger : MonoBehaviour {
         {
             col.SendMessageUpwards("Damage", dmg);
             col.SendMessageUpwards("KnockBack");
+            player.gainExp(1);
         }
     }
 }
