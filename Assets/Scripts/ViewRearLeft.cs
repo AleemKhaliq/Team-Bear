@@ -4,14 +4,21 @@ using UnityEngine;
 
 public class ViewRearLeft : MonoBehaviour
 {
-    public bool InView { get; set; }
+    public bool inView;
     private Player player;
+    private RangeCheck rangeCheck;
 
     // Use this for initialization
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-        InView = false;
+        rangeCheck = GameObject.FindGameObjectWithTag("Vision").GetComponent<RangeCheck>();
+        inView = false;
+    }
+
+    void Update()
+    {
+        rangeCheck.IsLeftBehind = inView;
     }
 
     /// <summary>
@@ -23,7 +30,7 @@ public class ViewRearLeft : MonoBehaviour
         if (area.CompareTag("Player"))
         {
             Debug.Log("Area crossed");
-            InView = true;
+            inView = true;
         }
     }
 }

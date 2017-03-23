@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,10 +8,15 @@ public class Drone : MonoBehaviour
     public bool faceRight;
     public bool faceLeft;
     public bool attacking;
+    public bool inRange;
     public float speed;
     public float reverseSpeed;
+    public float frontWakeRange;
+    public float rearWakeRange;
+    private float distance;
     private float attackTimer = 0.2f;
     private float direction = 0;
+    public bool InRange { get; set; }
 
 
     private Player player;
@@ -30,14 +36,15 @@ public class Drone : MonoBehaviour
         faceLeft = true;
         faceRight = false;        
         attacking = false;
+        inRange = false;
         animate.SetBool("Attack", attacking);
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
-        //Behave();
-        Chase();
+        Behave();
+        //Chase();
 
         CheckPosition();
         if (faceRight && player.transform.position.x < transform.position.x + (direction * 1) || faceLeft && player.transform.position.x > transform.position.x + (direction * 1))
@@ -173,9 +180,37 @@ public class Drone : MonoBehaviour
     // Combined Behaviour
     void Behave()
     {
-        if (rangeCheck.inRange)
+        CheckRange();
+        if (inRange)
         {
             Chase();
+        }
+    }
+
+    void CheckRange()
+    {
+        distance = transform.position.x - player.transform.position.x;
+        if (faceRight)
+        {
+            if(distance < 0 && Math.Abs(distance) < frontWakeRange || distance > 0 && distance < rearWakeRange)
+            {
+                inRange = true;
+            }
+            else
+            {
+                inRange = false;
+            }
+        }
+        if (faceLeft)
+        {
+            if(distance > 0 && distance < frontWakeRange || distance < 0 && Math.Abs(distance) < rearWakeRange)
+            {
+                inRange = true;
+            }
+            else
+            {
+                inRange = false;
+            }
         }
     }
 }

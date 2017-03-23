@@ -12,6 +12,10 @@ public class RangeCheck : MonoBehaviour
     private ViewRearLeft leftBehind;
 
     public bool inRange;
+    public bool IsRight { get; set; }
+    public bool IsLeft { get; set; }
+    public bool IsRightBehind { get; set; }
+    public bool IsLeftBehind { get; set; }
 
 	// Use this for initialization
 	void Start ()
@@ -29,9 +33,27 @@ public class RangeCheck : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-		if(drone.faceLeft && left.InView || drone.faceLeft && leftBehind.InView || drone.faceRight && right.InView || drone.faceRight && rightBehind.InView)
+        //if(drone.faceLeft && left.inView || drone.faceLeft && leftBehind.inView || drone.faceRight && right.inView || drone.faceRight && rightBehind.inView)
+        //      {
+        //          inRange = true;
+        //      }
+        //      else
+        //      {
+        //          inRange = false;
+        //      }
+        ViewCheck();
+        drone.InRange = inRange;
+	}
+
+    void ViewCheck()
+    {
+        if (drone.faceLeft && IsLeft || drone.faceLeft && IsLeftBehind || drone.faceRight && IsRight || drone.faceRight && IsRightBehind)
         {
             inRange = true;
         }
-	}
+        else
+        {
+            inRange = false;
+        }
+    }
 }
