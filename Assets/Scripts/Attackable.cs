@@ -31,7 +31,7 @@ public class Attackable : MonoBehaviour {
         }
         if (curHealth <= 0)
         {
-            Destroy(gameObject);
+            Die();
         }
 
         if (player.transform.position.x > getBody.transform.position.x)
@@ -89,5 +89,11 @@ public class Attackable : MonoBehaviour {
             }
             doKnock = false;
         }
+    }
+
+    public void Die()
+    {
+        player.gainExp(25);
+        Destroy(gameObject);
     }
 }

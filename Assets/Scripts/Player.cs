@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
-
+    //Movement
     public float speed = 35f;
     public float maxSpeed = 5;
     public float jumpStrength = 150f;
@@ -20,9 +20,11 @@ public class Player : MonoBehaviour
     private float dashTime = 0.25f;  //Time spent dashing
     public float timer;
     
+    //Direction
     public bool noMove; //Prevent movement
     public int faceDirection;   //Direction Player is facing
 
+    //Attacking
     public bool canFloat;
     public bool attacking;
     public bool doSwing;
@@ -34,8 +36,15 @@ public class Player : MonoBehaviour
     public bool charged;    //Whether or not attck has been held long enough for charge moves
     public float heldTime;  //Ammount of time attack has been held
 
+    //Health
     public int maxHealth = 5;
     public int curHealth;
+    public Vector2 spawnPoint;
+
+    //Experience
+    public int exp;
+    public int currentLvl;
+    public int[] lvlExpNeeded = { 0, 100, 250, 500 };
 
     private Rigidbody2D getBody;
     public Collider2D AttackTrigger;
@@ -47,6 +56,7 @@ public class Player : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        //Initialising variables
         getBody = gameObject.GetComponent<Rigidbody2D>();
         anim = gameObject.GetComponent<Animator>();
         curHealth = maxHealth;
@@ -58,6 +68,9 @@ public class Player : MonoBehaviour
         SlamAttackTrigger.enabled = false;
         roll = false;
         canRoll = true;
+        spawnPoint = transform.position;    //Set spawnPoint as point where player starts initially
+        exp = 0;
+        currentLvl = 0;
     }
 
     // Update is called once per frame
@@ -352,6 +365,32 @@ public class Player : MonoBehaviour
     {
         curHealth -= dmg;
         gameObject.GetComponent<Animation>().Play("Red_Flash");
+    }
+
+    public void gainExp(int expGain)
+    {
+        exp += expGain;
+        if (exp >= 500)
+        {
+            currentLvl = 3;
+        }
+        else if (exp >= 250)
+        {
+            currentLvl = 2;
+        }
+        else if (exp >= 100)
+        {
+            currentLvl = 1;
+        }
+        else
+        {
+            currentLvl = 0;
+        }
+    }
+
+    public void hitLevelLimit()
+    {
+        transform.position = spawnPoint;
     }
 
     public IEnumerator Knockback(float knockDur, float knockDir, float power)
