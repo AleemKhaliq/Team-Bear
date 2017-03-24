@@ -33,14 +33,6 @@ public class RangeCheck : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
     {
-        //if(drone.faceLeft && left.inView || drone.faceLeft && leftBehind.inView || drone.faceRight && right.inView || drone.faceRight && rightBehind.inView)
-        //      {
-        //          inRange = true;
-        //      }
-        //      else
-        //      {
-        //          inRange = false;
-        //      }
         ViewCheck();
         drone.InRange = inRange;
 	}
