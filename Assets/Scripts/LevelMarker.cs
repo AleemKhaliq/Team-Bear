@@ -16,8 +16,14 @@ public class LevelMarker : MonoBehaviour
     void Start ()
     {
         anim = gameObject.GetComponent<Animator>();
+
         isOpen = false;
         isDone = false;
+
+        if (isDone)
+        {
+            nextLevel.isOpen = true;
+        }
     }
 	
 	// Update is called once per frame
@@ -25,5 +31,13 @@ public class LevelMarker : MonoBehaviour
     {
         anim.SetBool("IsOpen", isOpen);
         anim.SetBool("IsDone", isDone);
+    }
+
+    public void StartLevel ()
+    {
+        if (isOpen)
+        {
+            Debug.Log("Starting level " + levelNo);
+        }
     }
 }

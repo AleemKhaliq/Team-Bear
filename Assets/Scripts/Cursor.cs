@@ -10,24 +10,34 @@ public class Cursor : MonoBehaviour
 	void Start ()
     {
         marker = GameObject.FindGameObjectWithTag("Marker").GetComponent<LevelMarker>();
-
+        while (marker.previousLevel != null)
+        {
+            marker = marker.previousLevel;
+        }
+        transform.position = marker.transform.position + new Vector3(0, 0.5f);
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
-        if (Input.GetAxisRaw("Horizontal") > 0 && marker.levelNo != 11)
+        if (((Input.GetButtonDown("Horizontal") && Input.GetAxisRaw("Horizontal") > 0) || (Input.GetButtonDown("Vertical") && Input.GetAxisRaw("Vertical") > 0)) && marker.nextLevel != null)
         {
             transform.position = marker.nextLevel.transform.position + new Vector3(0, 0.5f);
             marker = marker.nextLevel;
-            Debug.Log("Right");
         }
-        if (Input.GetAxisRaw("Horizontal") < 0 && marker.levelNo != 1)
+        if (((Input.GetButtonDown("Horizontal") && Input.GetAxisRaw("Horizontal") < 0) || (Input.GetButtonDown("Vertical") && Input.GetAxisRaw("Vertical") < 0)) && marker.previousLevel != null)
         {
             transform.position = marker.previousLevel.transform.position + new Vector3(0, 0.5f);
             marker = marker.previousLevel;
-            Debug.Log("Left");
         }
-        transform.position = marker.transform.position;
+        if (Input.GetButtonDown("Jump"))
+        {
+            marker.StartLevel();
+        }
+    }
+
+    void Print()
+    {
+        Debug.Log("No: " + marker.levelNo + " " + "X: " + marker.transform.position.x + ",    y: " + marker.transform.position.y);
     }
 }
