@@ -5,6 +5,9 @@ using UnityEngine;
 public class Cursor : MonoBehaviour
 {
     public LevelMarker marker;
+    public bool moving;
+    public int count;
+    private bool up;
 
 	// Use this for initialization
 	void Start ()
@@ -14,7 +17,9 @@ public class Cursor : MonoBehaviour
         {
             marker = marker.previousLevel;
         }
-        transform.position = marker.transform.position + new Vector3(0, 0.5f);
+        transform.position = marker.transform.position + new Vector3(0, 0.35f);
+        moving = false;
+        up = false;
     }
 	
 	// Update is called once per frame
@@ -22,18 +27,50 @@ public class Cursor : MonoBehaviour
     {
         if (((Input.GetButtonDown("Horizontal") && Input.GetAxisRaw("Horizontal") > 0) || (Input.GetButtonDown("Vertical") && Input.GetAxisRaw("Vertical") > 0)) && marker.nextLevel != null)
         {
-            transform.position = marker.nextLevel.transform.position + new Vector3(0, 0.5f);
+            moving = true;
+            transform.position = marker.nextLevel.transform.position + new Vector3(0, 0.35f);
             marker = marker.nextLevel;
         }
         if (((Input.GetButtonDown("Horizontal") && Input.GetAxisRaw("Horizontal") < 0) || (Input.GetButtonDown("Vertical") && Input.GetAxisRaw("Vertical") < 0)) && marker.previousLevel != null)
         {
-            transform.position = marker.previousLevel.transform.position + new Vector3(0, 0.5f);
+            moving = true;
+            transform.position = marker.previousLevel.transform.position + new Vector3(0, 0.35f);
             marker = marker.previousLevel;
         }
         if (Input.GetButtonDown("Jump"))
         {
+            moving = true;
             marker.StartLevel();
         }
+
+        //Reset idle loop on action
+        if (moving)
+        {
+            up = false;
+            count = 0;
+        }
+
+        //Idle loop
+        if (count < 20)
+        {
+            count++;
+        }
+        else
+        {
+            if(!up)
+            {
+                transform.position = transform.position + new Vector3(0, 0.25f);
+                count = 0;
+                up = true;
+            }
+            else
+            {
+                transform.position = transform.position + new Vector3(0, -0.25f);
+                count = 0;
+                up = false;
+            }
+        }
+        moving = false;
     }
 
     void Print()
