@@ -23,9 +23,12 @@ public class EndOfLevelTrigger : MonoBehaviour
     {
         if (col.CompareTag("Player"))
         {
-            marker.isDone = true;
-            Debug.Log("Level complete");
-            SceneManager.LoadScene("Map");
+            if ((Input.GetButtonDown("Horizontal") && Input.GetAxisRaw("Horizontal") > 0))
+            {
+                marker.isDone = true;
+                Debug.Log("Level complete");
+                SceneManager.LoadScene("Map");
+            }
         }
     }
 }

@@ -18,6 +18,11 @@ public class LevelMarker : MonoBehaviour
     {
         anim = gameObject.GetComponent<Animator>();
 
+        if (previousLevel == null)
+        {
+            isOpen = true;
+        }
+
         if (isDone)
         {
             nextLevel.isOpen = true;

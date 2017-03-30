@@ -51,7 +51,7 @@ public class Cursor : MonoBehaviour
         }
 
         //Idle loop
-        if (count < 20)
+        /*if (count < 20)
         {
             count++;
         }
@@ -69,7 +69,7 @@ public class Cursor : MonoBehaviour
                 count = 0;
                 up = false;
             }
-        }
+        }*/
         moving = false;
     }
 
