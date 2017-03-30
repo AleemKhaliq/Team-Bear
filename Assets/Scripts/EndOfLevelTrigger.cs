@@ -5,30 +5,44 @@ using UnityEngine.SceneManagement;
 
 public class EndOfLevelTrigger : MonoBehaviour
 {
-    public LevelMarker marker;
+    public int levelNo;
+    private int playerLevel;
+    private bool canLeave;
 
     // Use this for initialization
     void Start()
     {
-
+        playerLevel = PlayerPrefs.GetInt("levelReached", 1);
+        canLeave = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if ((Input.GetButtonDown("Horizontal") && Input.GetAxisRaw("Horizontal") > 0) && canLeave)
+        {
+            if (playerLevel <= levelNo)
+            {
+                PlayerPrefs.SetInt("levelReached", (levelNo + 1));
+            }
+            Debug.Log("Level complete");
+            SceneManager.LoadScene("Map");
+        }
     }
 
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.CompareTag("Player"))
         {
-            if ((Input.GetButtonDown("Horizontal") && Input.GetAxisRaw("Horizontal") > 0))
-            {
-                marker.isDone = true;
-                Debug.Log("Level complete");
-                SceneManager.LoadScene("Map");
-            }
+            canLeave = true;
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D col)
+    {
+        if (col.CompareTag("Player"))
+        {
+            canLeave = false;
         }
     }
 }

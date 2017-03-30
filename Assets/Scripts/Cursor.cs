@@ -1,21 +1,33 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Cursor : MonoBehaviour
 {
     public LevelMarker marker;
-    public bool moving;
-    public int count;
+
+    private int playerLevel;
+
+    private bool moving;
+    private int count;
     private bool up;
 
 	// Use this for initialization
 	void Start ()
     {
         marker = GameObject.FindGameObjectWithTag("Marker").GetComponent<LevelMarker>();
+        playerLevel = PlayerPrefs.GetInt("levelReached", 1);
         while (marker.previousLevel != null)
         {
             marker = marker.previousLevel;
+        }
+        marker.isOpen = true;
+        while (marker.levelNo < playerLevel)
+        {
+            marker.isOpen = true;
+            marker.isDone = true;
+            marker = marker.nextLevel;
         }
         transform.position = marker.transform.position + new Vector3(0, 0.35f);
         moving = false;
@@ -42,7 +54,11 @@ public class Cursor : MonoBehaviour
             moving = true;
             marker.StartLevel();
         }
-
+        if (Input.GetButtonDown("Cancel"))
+        {
+            PlayerPrefs.DeleteAll();
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
         //Reset idle loop on action
         if (moving)
         {
