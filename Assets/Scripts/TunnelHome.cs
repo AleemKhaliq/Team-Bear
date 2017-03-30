@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class TunnelHome : MonoBehaviour
 {
+    public int levelNo;
+    private int playerLevel;
     private Player player;
     private TunnelMessage tunnelMsg;
     private Vector2 tunnel;
@@ -14,6 +16,7 @@ public class TunnelHome : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         tunnelMsg = GameObject.FindGameObjectWithTag("T_Message").GetComponent<TunnelMessage>();
+        playerLevel = PlayerPrefs.GetInt("levelReached", 1);
         tunnel = gameObject.transform.position;
     }
 
@@ -29,10 +32,17 @@ public class TunnelHome : MonoBehaviour
             // Sets Display boolean to true so that the tunnel message prompt is displayed
             tunnelMsg.Display = true;
 
-            if(Input.GetKeyDown(KeyCode.T))
+            if (playerLevel <= levelNo)
+            {
+                PlayerPrefs.SetInt("levelReached", (levelNo + 1));
+            }
+
+            Debug.Log("Level complete");
+            if (Input.GetKeyDown(KeyCode.T))
             {
                 SceneManager.LoadScene("Map");
             }
+
         }
         //else
         //{

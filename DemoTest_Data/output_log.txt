@@ -1,0 +1,64 @@
+Mono path[0] = 'F:/My Files/Uni/Second Year/Semester II/Team Project/Project Files/Team-Bear/DemoTest_Data/Managed'
+Mono path[1] = 'F:/My Files/Uni/Second Year/Semester II/Team Project/Project Files/Team-Bear/DemoTest_Data/Mono'
+Mono config path = 'F:/My Files/Uni/Second Year/Semester II/Team Project/Project Files/Team-Bear/DemoTest_Data/Mono/etc'
+PlayerConnection initialized from F:/My Files/Uni/Second Year/Semester II/Team Project/Project Files/Team-Bear/DemoTest_Data (debug = 0)
+PlayerConnection initialized network socket : 0.0.0.0 55398
+Multi-casting "[IP] 10.189.8.228 [Port] 55398 [Flags] 2 [Guid] 542492044 [EditorId] 2688225041 [Version] 1048832 [Id] WindowsPlayer(Aleems-Laptop) [Debug] 0" to [225.0.0.222:54997]...
+Started listening to [0.0.0.0:55398]
+PlayerConnection already initialized - listening to [0.0.0.0:55398]
+Initialize engine version: 5.5.1f1 (88d00a7498cd)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: AMD Radeon(TM) R5 Graphics (ID=0x9851)
+    Vendor:   ATI
+    VRAM:     1010 MB
+    Driver:   15.201.1101.0
+Begin MonoManager ReloadAssembly
+Platform assembly: F:\My Files\Uni\Second Year\Semester II\Team Project\Project Files\Team-Bear\DemoTest_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading F:\My Files\Uni\Second Year\Semester II\Team Project\Project Files\Team-Bear\DemoTest_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: F:\My Files\Uni\Second Year\Semester II\Team Project\Project Files\Team-Bear\DemoTest_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading F:\My Files\Uni\Second Year\Semester II\Team Project\Project Files\Team-Bear\DemoTest_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: F:\My Files\Uni\Second Year\Semester II\Team Project\Project Files\Team-Bear\DemoTest_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading F:\My Files\Uni\Second Year\Semester II\Team Project\Project Files\Team-Bear\DemoTest_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: F:\My Files\Uni\Second Year\Semester II\Team Project\Project Files\Team-Bear\DemoTest_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading F:\My Files\Uni\Second Year\Semester II\Team Project\Project Files\Team-Bear\DemoTest_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+Platform assembly: F:\My Files\Uni\Second Year\Semester II\Team Project\Project Files\Team-Bear\DemoTest_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll (this message is harmless)
+Loading F:\My Files\Uni\Second Year\Semester II\Team Project\Project Files\Team-Bear\DemoTest_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll into Unity Child Domain
+- Completed reload, in  0.166 seconds
+Platform assembly: F:\My Files\Uni\Second Year\Semester II\Team Project\Project Files\Team-Bear\DemoTest_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: F:\My Files\Uni\Second Year\Semester II\Team Project\Project Files\Team-Bear\DemoTest_Data\Managed\System.dll (this message is harmless)
+desktop: 1366x768 60Hz; virtual: 1366x768 at 0,0
+<RI> Initializing input.
+<RI> Input initialized.
+<RI> Initialized touch support.
+UnloadTime: 3.689722 ms
+Setting up 1 worker threads for Enlighten.
+  Thread -> id: 29c4 -> priority: 1 
+Starting level 1
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+LevelMarker:StartLevel() (at F:\My Files\Uni\Second Year\Semester II\Team Project\Project Files\Team-Bear\Assets\Scripts\LevelMarker.cs:38)
+Cursor:Update() (at F:\My Files\Uni\Second Year\Semester II\Team Project\Project Files\Team-Bear\Assets\Scripts\Cursor.cs:55)
+ 
+(Filename: F:/My Files/Uni/Second Year/Semester II/Team Project/Project Files/Team-Bear/Assets/Scripts/LevelMarker.cs Line: 38)
+
+Unloading 5 Unused Serialized files (Serialized files now loaded: 0)
+UnloadTime: 6.686949 ms
+System memory in use before: 16.5 MB.
+System memory in use after: 16.5 MB.
+
+Unloading 15 unused Assets to reduce memory usage. Loaded Objects now: 917.
+Total: 0.889472 ms (FindLiveObjects: 0.167737 ms CreateObjectMapping: 0.071301 ms MarkObjects: 0.493467 ms  DeleteObjects: 0.112338 ms)
+
+Hit
+UnityEngine.DebugLogHandler:Internal_Log(LogType, String, Object)
+UnityEngine.DebugLogHandler:LogFormat(LogType, Object, String, Object[])
+UnityEngine.Logger:Log(LogType, Object)
+UnityEngine.Debug:Log(Object)
+Spikes:OnTriggerEnter2D(Collider2D) (at F:\My Files\Uni\Second Year\Semester II\Team Project\Project Files\Team-Bear\Assets\Scripts\Spikes.cs:22)
+ 
+(Filename: F:/My Files/Uni/Second Year/Semester II/Team Project/Project Files/Team-Bear/Assets/Scripts/Spikes.cs Line: 22)
+
