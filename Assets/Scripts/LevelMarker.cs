@@ -49,7 +49,7 @@ public class LevelMarker : MonoBehaviour
                     break;
                 //Cave 1
                 case 2:
-
+                    SceneManager.LoadScene("LevelTestScene2");
                     break;
                 //Outdoor 2
                 case 3:
@@ -57,7 +57,7 @@ public class LevelMarker : MonoBehaviour
                     break;
                 //Cave 2
                 case 4:
-
+                    SceneManager.LoadScene("LevelTestScene3");
                     break;
                 //Outdoor 3
                 case 5:
@@ -65,7 +65,7 @@ public class LevelMarker : MonoBehaviour
                     break;
                 //Cave 3
                 case 6:
-
+                    SceneManager.LoadScene("LevelTestScene4");
                     break;
                 //Outdoor 4
                 case 7:
@@ -73,7 +73,7 @@ public class LevelMarker : MonoBehaviour
                     break;
                 //Cave 4
                 case 8:
-
+                    SceneManager.LoadScene("LevelTestScene5");
                     break;
                 //Outdoor 5
                 case 9:
@@ -81,7 +81,7 @@ public class LevelMarker : MonoBehaviour
                     break;
                 //Cave 5
                 case 10:
-
+                    SceneManager.LoadScene("LevelTestScene6");
                     break;
                 //Final Level
                 case 11:

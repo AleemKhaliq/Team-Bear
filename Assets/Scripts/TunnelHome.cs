@@ -31,7 +31,7 @@ public class TunnelHome : MonoBehaviour
 
             if(Input.GetKeyDown(KeyCode.T))
             {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                SceneManager.LoadScene("Map");
             }
         }
         //else
