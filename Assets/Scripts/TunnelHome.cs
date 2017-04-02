@@ -6,18 +6,14 @@ using UnityEngine.SceneManagement;
 public class TunnelHome : MonoBehaviour
 {
     public int levelNo;
-    private int playerLevel;
-    private Player player;
-    private TunnelMessage tunnelMsg;
-    private Vector2 tunnel;
+    private int playerLevel;    
+    private TunnelMessage tunnelMsg;    
         
 	// Use this for initialization
 	void Start ()
     {
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         tunnelMsg = GameObject.FindGameObjectWithTag("T_Message").GetComponent<TunnelMessage>();
-        playerLevel = PlayerPrefs.GetInt("levelReached", 1);
-        tunnel = gameObject.transform.position;
+        playerLevel = PlayerPrefs.GetInt("levelReached", 1);        
     }
 
     /// <summary>
@@ -43,11 +39,7 @@ public class TunnelHome : MonoBehaviour
                 SceneManager.LoadScene("Map");
             }
 
-        }
-        //else
-        //{
-        //    tunnelMsg.Display = false;
-        //}
+        }        
     }
      
 }
