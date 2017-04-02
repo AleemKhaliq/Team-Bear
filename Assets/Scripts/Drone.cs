@@ -9,6 +9,7 @@ public class Drone : MonoBehaviour
     public bool faceLeft;
     public bool attacking;
     public bool inRange;
+    public bool attackRange;
     public float speed;
     public float reverseSpeed;
     public float frontWakeRange;
@@ -16,56 +17,37 @@ public class Drone : MonoBehaviour
     private float distance;
     private float attackTimer = 0.2f;
     private float direction = 0;
-    public bool InRange { get; set; }
-
-
+    //public bool InRange { get; set; }
+    
     private Player player;
     private Rigidbody2D myRigidBody;
     private SpriteRenderer SpriteRenderer;
-    private Animator animate;
-    //private RangeCheck rangeCheck;
+    private Animator animate;    
     public Collider2D AttackTrigger;
     
 	// Use this for initialization
 	void Start ()
     {
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-        //rangeCheck = GameObject.FindGameObjectWithTag("Vision").GetComponent<RangeCheck>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();        
         myRigidBody = GetComponent<Rigidbody2D>();
         SpriteRenderer = GetComponent<SpriteRenderer>();
+        animate = GetComponent<Animator>();
         faceLeft = true;
         faceRight = false;        
         attacking = false;
         inRange = false;
         animate.SetBool("Attack", attacking);
+        attacking = false;
+        AttackTrigger.enabled = false;
+        attackRange = false;
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
         Behave();
-        //Chase();
-
         CheckPosition();
-        if (faceRight && player.transform.position.x < transform.position.x + (direction * 1) || faceLeft && player.transform.position.x > transform.position.x + (direction * 1))
-        {
-            Debug.Log("close");            
-            attacking = true;
-            AttackTrigger.enabled = true;
-
-            if (attacking)
-            {
-                if (attackTimer > 0)
-                {
-                    attackTimer -= Time.deltaTime;
-                }
-                else
-                {
-                    attacking = false;
-                    AttackTrigger.enabled = false;
-                }
-            }
-        }
+        Swing();
 	}
 
     /// <summary>
@@ -172,9 +154,28 @@ public class Drone : MonoBehaviour
     }
 
     // Attack logic
-    bool Swing()
+    void Swing()
     {
-        return true;
+        CheckRange();
+        if (/*faceRight && player.transform.position.x < transform.position.x + (direction * 1) || faceLeft && player.transform.position.x > transform.position.x + (direction * 1)*/attackRange)
+        {
+            Debug.Log("close");
+            attacking = true;
+            AttackTrigger.enabled = true;
+
+            if (attacking)
+            {
+                if (attackTimer > 0)
+                {
+                    attackTimer -= Time.deltaTime;
+                }
+                else
+                {
+                    attacking = false;
+                    AttackTrigger.enabled = false;
+                }
+            }
+        }
     }
 
     // Combined Behaviour
@@ -195,10 +196,20 @@ public class Drone : MonoBehaviour
             if(distance < 0 && Math.Abs(distance) < frontWakeRange || distance > 0 && distance < rearWakeRange)
             {
                 inRange = true;
+                if(distance <= -1)
+                {
+                    attackRange = true;
+                    Debug.Log("attack");
+                }
+                else
+                {
+                    attackRange = false;
+                }
             }
             else
             {
                 inRange = false;
+                attackRange = false;
             }
         }
         if (faceLeft)
@@ -206,10 +217,20 @@ public class Drone : MonoBehaviour
             if(distance > 0 && distance < frontWakeRange || distance < 0 && Math.Abs(distance) < rearWakeRange)
             {
                 inRange = true;
+                if (distance <= 1)
+                {
+                    attackRange = true;
+                    Debug.Log("attack");
+                }
+                else
+                {
+                    attackRange = false;
+                }
             }
             else
             {
                 inRange = false;
+                attackRange = false;
             }
         }
     }
