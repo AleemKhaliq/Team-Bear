@@ -23,7 +23,7 @@ public class DroneSpawner : MonoBehaviour
         BoxCollider2D = GetComponent<BoxCollider2D>();        
         xMin = transform.position.x - (BoxCollider2D.size.x/2);
         xMax = transform.position.x + (BoxCollider2D.size.x/2);
-        yLevel = -2.55f;
+        yLevel = transform.position.y;
         inArea = false;
         enemyCounter = 0;
 	}
