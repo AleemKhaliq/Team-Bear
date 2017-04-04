@@ -12,6 +12,7 @@ public class Attackable : MonoBehaviour {
     private Vector2 getPos;         //Position of attatched object
     public Vector2 strng;           //Attack strength
     private int direction;
+    private TunnelHome Tunnel;
 
     // Use this for initialization
     void Start ()
@@ -19,6 +20,7 @@ public class Attackable : MonoBehaviour {
         curHealth = maxHealth;
         getBody = gameObject.GetComponent<Rigidbody2D>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        Tunnel = GameObject.FindGameObjectWithTag("Tunnel").GetComponent<TunnelHome>();
     }
 	
 	// Update is called once per frame
@@ -95,5 +97,6 @@ public class Attackable : MonoBehaviour {
     {
         player.gainExp(25);
         Destroy(gameObject);
+        Tunnel.RemoveEnemy();
     }
 }

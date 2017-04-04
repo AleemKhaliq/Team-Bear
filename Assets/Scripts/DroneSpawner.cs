@@ -15,18 +15,21 @@ public class DroneSpawner : MonoBehaviour
 
     private BoxCollider2D BoxCollider2D;    
     public GameObject enemy;
+    private TunnelHome Tunnel;
 
 	// Use this for initialization
 	void Start ()
     {
         countdown = spawnDelay;
-        BoxCollider2D = GetComponent<BoxCollider2D>();        
+        BoxCollider2D = GetComponent<BoxCollider2D>();
+        Tunnel = GameObject.FindGameObjectWithTag("Tunnel").GetComponent<TunnelHome>();
         xMin = transform.position.x - (BoxCollider2D.size.x/2);
         xMax = transform.position.x + (BoxCollider2D.size.x/2);
         yLevel = transform.position.y;
         inArea = false;
         enemyCounter = 0;
-	}
+        Tunnel.AddEnemy(enemyAmount);
+    }
 	
 	// Update is called once per frame
 	void Update ()
@@ -39,7 +42,7 @@ public class DroneSpawner : MonoBehaviour
                 Spawn();
                 enemyCounter++;
                 countdown = spawnDelay;
-                Debug.Log("Spawn");
+                Debug.Log("Spawn");                
             }                        
         }        
     }
@@ -58,7 +61,7 @@ public class DroneSpawner : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             inArea = true;
-            Debug.Log("In Spawn Area");
+            Debug.Log("In Spawn Area");            
         }
     }
 }

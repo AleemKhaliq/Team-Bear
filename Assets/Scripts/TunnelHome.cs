@@ -6,27 +6,30 @@ using UnityEngine.SceneManagement;
 public class TunnelHome : MonoBehaviour
 {
     public int levelNo;
+    public int enemyCount;
+    public int minEnemyCount;
     private int playerLevel;    
-    private TunnelMessage tunnelMsg;    
+    private TunnelMessage TunnelMsg;    
         
 	// Use this for initialization
 	void Start ()
     {
-        tunnelMsg = GameObject.FindGameObjectWithTag("T_Message").GetComponent<TunnelMessage>();
-        playerLevel = PlayerPrefs.GetInt("levelReached", 1);        
+        TunnelMsg = GameObject.FindGameObjectWithTag("T_Message").GetComponent<TunnelMessage>();
+        playerLevel = PlayerPrefs.GetInt("levelReached", 1);
+        enemyCount = 0;      
     }
 
     /// <summary>
     /// Checks to see if the player has entered over the area of the tunnel
     /// </summary>
-    /// <param name="area"></param>
-    void OnTriggerStay2D(Collider2D area)
+    /// <param name="collider"></param>
+    void OnTriggerStay2D(Collider2D collider)
     {
-        if (area.CompareTag("Player"))
+        if (collider.CompareTag("Player") && enemyCount < minEnemyCount)
         {
             Debug.Log("Area crossed");
             // Sets Display boolean to true so that the tunnel message prompt is displayed
-            tunnelMsg.Display = true;
+            TunnelMsg.Display = true;
 
             if (playerLevel <= levelNo)
             {
@@ -41,5 +44,14 @@ public class TunnelHome : MonoBehaviour
 
         }        
     }
-     
+    
+    public void AddEnemy(int i)
+    {
+        enemyCount = enemyCount + i;
+    }
+
+    public void RemoveEnemy()
+    {
+        enemyCount--;
+    }
 }

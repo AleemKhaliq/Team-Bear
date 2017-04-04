@@ -14,7 +14,9 @@ public class Drone : MonoBehaviour
     public float reverseSpeed;
     public float frontWakeRange;
     public float rearWakeRange;
+    public float delayAttack;
     private float distance;
+    private float yDistance;
     private float attackTimer = 0.2f;
     private float direction = 0;
     //public bool InRange { get; set; }
@@ -46,8 +48,7 @@ public class Drone : MonoBehaviour
 	void Update ()
     {
         Behave();
-        CheckPosition();
-        Swing();
+        CheckPosition();        
 	}
 
     /// <summary>
@@ -175,6 +176,7 @@ public class Drone : MonoBehaviour
                     AttackTrigger.enabled = false;
                 }
             }
+            player.Damage(1);
         }
     }
 
@@ -185,18 +187,28 @@ public class Drone : MonoBehaviour
         if (inRange)
         {
             Chase();
+            //Swing();
         }
+
+        //for(float i = 0; i <= delayAttack; i += Time.deltaTime)
+        //{
+        //    if(i == delayAttack)
+        //    {
+        //        Swing();
+        //    }
+        //}
     }
 
     void CheckRange()
     {
         distance = transform.position.x - player.transform.position.x;
+        yDistance = transform.position.y - player.transform.position.y;
         if (faceRight)
         {
             if(distance < 0 && Math.Abs(distance) < frontWakeRange || distance > 0 && distance < rearWakeRange)
             {
                 inRange = true;
-                if(distance <= -1)
+                if(distance >= -1 && Math.Abs(yDistance) < 0.2f)
                 {
                     attackRange = true;
                     Debug.Log("attack");
@@ -217,7 +229,7 @@ public class Drone : MonoBehaviour
             if(distance > 0 && distance < frontWakeRange || distance < 0 && Math.Abs(distance) < rearWakeRange)
             {
                 inRange = true;
-                if (distance <= 1)
+                if (distance <= 1 && Math.Abs(yDistance) < 0.2f)
                 {
                     attackRange = true;
                     Debug.Log("attack");
