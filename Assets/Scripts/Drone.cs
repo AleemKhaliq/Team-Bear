@@ -15,6 +15,7 @@ public class Drone : MonoBehaviour
     public float frontWakeRange;
     public float rearWakeRange;
     public float delayAttack;
+    private float delayTimer;
     private float distance;
     private float yDistance;
     private float attackTimer = 0.2f;
@@ -42,6 +43,7 @@ public class Drone : MonoBehaviour
         attacking = false;
         AttackTrigger.enabled = false;
         attackRange = false;
+        delayTimer = delayAttack;
     }
 	
 	// Update is called once per frame
@@ -187,16 +189,18 @@ public class Drone : MonoBehaviour
         if (inRange)
         {
             Chase();
+            while(delayTimer >= 0)
+            {
+                delayTimer -= Time.deltaTime;
+                if(delayTimer == 0)
+                {
+                    Swing();
+                    delayTimer = delayAttack;
+                    Debug.Log("attack");
+                }
+            }
             //Swing();
         }
-
-        //for(float i = 0; i <= delayAttack; i += Time.deltaTime)
-        //{
-        //    if(i == delayAttack)
-        //    {
-        //        Swing();
-        //    }
-        //}
     }
 
     void CheckRange()
@@ -231,8 +235,7 @@ public class Drone : MonoBehaviour
                 inRange = true;
                 if (distance <= 1 && Math.Abs(yDistance) < 0.2f)
                 {
-                    attackRange = true;
-                    Debug.Log("attack");
+                    attackRange = true;                    
                 }
                 else
                 {
