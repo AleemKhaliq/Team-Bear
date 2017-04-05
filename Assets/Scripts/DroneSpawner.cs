@@ -47,6 +47,9 @@ public class DroneSpawner : MonoBehaviour
         }        
     }
 
+    /// <summary>
+    /// Spawns a clone of the drone prefab in a random location
+    /// </summary>
     void Spawn()
     {
         Vector2 randomPos = new Vector2(Random.Range(xMin, xMax), yLevel);
@@ -56,6 +59,10 @@ public class DroneSpawner : MonoBehaviour
         Instantiate(drone, randomPos, transform.rotation);
     }
     
+    /// <summary>
+    /// Checks to see if the player has entered into the spawn area
+    /// </summary>
+    /// <param name="collision"></param>
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Player"))

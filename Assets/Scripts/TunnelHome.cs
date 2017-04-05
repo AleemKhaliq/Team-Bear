@@ -20,7 +20,7 @@ public class TunnelHome : MonoBehaviour
     }
 
     /// <summary>
-    /// Checks to see if the player has entered over the area of the tunnel
+    /// Checks to see if the player has entered over the area of the tunnel and enough enemies have been killed
     /// </summary>
     /// <param name="collider"></param>
     void OnTriggerStay2D(Collider2D collider)
@@ -45,11 +45,18 @@ public class TunnelHome : MonoBehaviour
         }        
     }
     
+    /// <summary>
+    /// Adds the enemies spawned into a level into a counter to define if the tunnel is accessible
+    /// </summary>
+    /// <param name="i"></param>
     public void AddEnemy(int i)
     {
         enemyCount = enemyCount + i;
     }
 
+    /// <summary>
+    /// Removes enemies that have been killed from the counter
+    /// </summary>
     public void RemoveEnemy()
     {
         enemyCount--;

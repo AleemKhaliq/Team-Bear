@@ -156,11 +156,14 @@ public class Drone : MonoBehaviour
         }
     }
 
-    // Attack logic
+    //Combat and Behaviour logic
+    /// <summary>
+    /// Makes the drone do one damage to the player if it is in the attack range
+    /// </summary>
     void Swing()
     {
         CheckRange();
-        if (/*faceRight && player.transform.position.x < transform.position.x + (direction * 1) || faceLeft && player.transform.position.x > transform.position.x + (direction * 1)*/attackRange)
+        if (attackRange)
         {
             Debug.Log("close");
             attacking = true;
@@ -182,7 +185,9 @@ public class Drone : MonoBehaviour
         }
     }
 
-    // Combined Behaviour
+    /// <summary>
+    /// Defines when the drone should chase, attack, or run from the player
+    /// </summary>
     void Behave()
     {
         CheckRange();
@@ -198,11 +203,13 @@ public class Drone : MonoBehaviour
                     delayTimer = delayAttack;
                     Debug.Log("attack");
                 }
-            }
-            //Swing();
+            }            
         }
     }
 
+    /// <summary>
+    /// Checks how far the player is from the drone on the x and y axis to see if it is in chase/attack range
+    /// </summary>
     void CheckRange()
     {
         distance = transform.position.x - player.transform.position.x;
