@@ -49,6 +49,7 @@ public class Attackable : MonoBehaviour {
     public void Damage(int dmg)
     {
         curHealth -= dmg;
+        gameObject.GetComponent<Animation>().Play("Red_Flash");
     }
 
     public void KnockBack()

@@ -35,9 +35,8 @@ public class Spikes : MonoBehaviour {
         }
         else if (col.CompareTag("Enemy"))
         {
-            drone.Damage(1);
-            Debug.Log("Hit");
-            drone.KnockBack();            
+            drone.Die();
+            Debug.Log("Hit");           ;            
         }
     }
 }

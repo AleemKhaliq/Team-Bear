@@ -181,6 +181,7 @@ public class Drone : MonoBehaviour
                     AttackTrigger.enabled = false;
                 }
             }
+            //gameObject.GetComponent<Animation>().Play("Drone_Swing");
             player.Damage(1);
         }
     }
