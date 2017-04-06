@@ -12,14 +12,15 @@ public class BossHand : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        //getBody = gameObject.GetComponent<Rigidbody2D>();
+        getBody = gameObject.GetComponent<Rigidbody2D>();
         active = false;
+        hitObject = false;
     }
 	
 	// Update is called once per frame
 	void Update()
     {
-        //StartCoroutine(Slam());
+        StartCoroutine(Slam());
 
     }
 
@@ -28,7 +29,7 @@ public class BossHand : MonoBehaviour
         active = true;
         if(!hitObject)
         {
-            transform.position = new Vector2 (transform.position.x, transform.position.y - 1);
+            transform.position = new Vector2 (transform.position.x, transform.position.y - 0.1f);
         }
         yield return new WaitForSeconds(0.25f);
         active = false;
