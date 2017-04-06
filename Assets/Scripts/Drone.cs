@@ -35,11 +35,11 @@ public class Drone : MonoBehaviour
         myRigidBody = GetComponent<Rigidbody2D>();
         SpriteRenderer = GetComponent<SpriteRenderer>();
         animate = GetComponent<Animator>();
+
         faceLeft = true;
         faceRight = false;        
         attacking = false;
         inRange = false;
-        animate.SetBool("Attack", attacking);
         attacking = false;
         AttackTrigger.enabled = false;
         attackRange = false;
@@ -50,8 +50,11 @@ public class Drone : MonoBehaviour
 	void Update ()
     {
         Behave();
-        CheckPosition();        
-	}
+        CheckPosition();
+
+        animate.SetBool("Attack", attacking);
+        CheckRange();
+    }
 
     /// <summary>
     /// Checks to see which side of the enemy the player is on
@@ -162,7 +165,6 @@ public class Drone : MonoBehaviour
     /// </summary>
     void Swing()
     {
-        CheckRange();
         if (attackRange)
         {
             Debug.Log("close");
@@ -182,7 +184,6 @@ public class Drone : MonoBehaviour
                 }
             }
             //gameObject.GetComponent<Animation>().Play("Drone_Swing");
-            player.Damage(1);
         }
     }
 
@@ -215,9 +216,10 @@ public class Drone : MonoBehaviour
     {
         distance = transform.position.x - player.transform.position.x;
         yDistance = transform.position.y - player.transform.position.y;
+
         if (faceRight)
         {
-            if(distance < 0 && Math.Abs(distance) < frontWakeRange || distance > 0 && distance < rearWakeRange)
+            if(distance < 0 && distance < frontWakeRange || distance > 0 && distance < rearWakeRange)
             {
                 inRange = true;
                 if(distance >= -1 && Math.Abs(yDistance) < 0.2f)
@@ -238,7 +240,7 @@ public class Drone : MonoBehaviour
         }
         if (faceLeft)
         {
-            if(distance > 0 && distance < frontWakeRange || distance < 0 && Math.Abs(distance) < rearWakeRange)
+            if(distance > 0 && distance < frontWakeRange || distance < 0 && distance < rearWakeRange)
             {
                 inRange = true;
                 if (distance <= 1 && Math.Abs(yDistance) < 0.2f)
