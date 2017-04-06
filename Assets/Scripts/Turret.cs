@@ -97,5 +97,6 @@ public class Turret : MonoBehaviour {
     public void Damage(int dmg)
     {
         curHealth -= dmg;
+        gameObject.GetComponent<Animation>().Play("Red_Flash");
     }
 }

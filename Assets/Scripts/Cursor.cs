@@ -45,11 +45,6 @@ public class Cursor : MonoBehaviour
         {
             marker.StartLevel();
         }
-        if (Input.GetButtonDown("Cancel"))
-        {
-            PlayerPrefs.DeleteAll();
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-        }
     }
 
     void Print()
