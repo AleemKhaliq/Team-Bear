@@ -218,7 +218,7 @@ public class Player : MonoBehaviour
         }*/
 
         //Roll
-        if (Input.GetKeyDown("left shift") && grounded && !roll && canRoll)
+        if (Input.GetButtonDown("Fire3") && grounded && !roll && canRoll)
         {
             roll = true;
             timer = rollTime;
@@ -256,7 +256,7 @@ public class Player : MonoBehaviour
 
         //Air Dash
         //Only gets one charge per jump
-        if (Input.GetKeyDown("left shift") && !grounded && !dash && canDash)
+        if (Input.GetButtonDown("Fire3") && !grounded && !dash && canDash)
         {
             dash = true;
             timer = dashTime;

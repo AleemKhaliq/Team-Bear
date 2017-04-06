@@ -19,7 +19,7 @@ public class EndOfLevelTrigger : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if ((Input.GetButtonDown("Horizontal") && Input.GetAxisRaw("Horizontal") > 0) && canLeave)
+        if ((Input.GetButtonDown("Vertical") || Input.GetAxisRaw("Vertical") > 0) && canLeave)
         {
             if (playerLevel <= levelNo)
             {

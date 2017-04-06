@@ -37,7 +37,7 @@ public class TunnelHome : MonoBehaviour
             }
 
             Debug.Log("Level complete");
-            if (Input.GetButtonDown("Vertical") && Input.GetAxisRaw("Vertical") > 0)
+            if (Input.GetButtonDown("Vertical") || Input.GetAxisRaw("Vertical") > 0)
             {
                 SceneManager.LoadScene("Map");
             }
