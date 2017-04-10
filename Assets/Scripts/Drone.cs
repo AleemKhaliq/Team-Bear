@@ -18,7 +18,7 @@ public class Drone : MonoBehaviour
     private float delayTimer;
     private float distance;
     private float yDistance;
-    private float attackTimer = 0.2f;
+    private float attackTimer = 1f;
     private float direction = 0;
     //public bool InRange { get; set; }
     
