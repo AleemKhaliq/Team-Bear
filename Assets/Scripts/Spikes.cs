@@ -13,7 +13,10 @@ public class Spikes : MonoBehaviour {
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         spike = gameObject.transform.position;
-        drone = GameObject.FindGameObjectWithTag("Enemy").GetComponent<Attackable>();
+        if (drone != null)
+        {
+            Debug.Log("Found Drone");
+        }
     }
 
     void OnTriggerEnter2D(Collider2D col)
@@ -33,10 +36,10 @@ public class Spikes : MonoBehaviour {
             }
             StartCoroutine(player.Knockback(0.02f, direction, 5f));
         }
-        else if (col.CompareTag("Enemy"))
+        else if (col.isTrigger == false && col.CompareTag("Enemy"))
         {
-            drone.Die();
-            Debug.Log("Hit");           ;            
+            col.SendMessageUpwards("Damage", 100);
+            player.gainExp(5);
         }
     }
 }

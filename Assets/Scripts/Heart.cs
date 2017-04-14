@@ -25,6 +25,7 @@ public class Heart : MonoBehaviour
             if (player.curHealth != player.maxHealth)
             {
                 player.Damage(-2);
+                Destroy(gameObject);
             }
         }
     }

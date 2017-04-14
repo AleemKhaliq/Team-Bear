@@ -98,6 +98,9 @@ public class Attackable : MonoBehaviour {
     {
         player.gainExp(25);
         Destroy(gameObject);
-        Tunnel.RemoveEnemy();
+        if (Tunnel != null)
+        {
+            Tunnel.RemoveEnemy();
+        }
     }
 }
